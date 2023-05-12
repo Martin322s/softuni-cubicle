@@ -1,1 +1,1 @@
-exports.CONNECTION_STRING = "mongodb://localhost:27017/Cubicle";
+exports.CONNECTION_STRING = "mongodb://127.0.0.1:27017/Cubicle";
