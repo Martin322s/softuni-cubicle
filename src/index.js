@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 5500;
 
 initViewEngine(app);
-app.use('/static', express.static("./src/public"));
+app.use('/static', express.static("public"));
 app.use(router);
 
 initialDatabase()
