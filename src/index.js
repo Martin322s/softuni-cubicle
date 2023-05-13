@@ -7,6 +7,7 @@ const port = process.env.PORT || 5500;
 
 initViewEngine(app);
 app.use('/static', express.static("public"));
+app.use(express.urlencoded({ extended: false }));
 app.use(router);
 
 initialDatabase()
