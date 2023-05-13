@@ -6,3 +6,4 @@ exports.createCube = async (cubeData) => {
 }
 
 exports.getAll = async () => await Cube.find().lean();
+exports.getOne = async (cubeId) => await Cube.findById({ _id: cubeId });
