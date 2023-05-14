@@ -37,11 +37,16 @@ router.get('/attach/acessory/:cubeId', async (req, res) => {
     const cubeId = req.params.cubeId;
     const cube = await getOne(cubeId);
     const allAccessories = await getAllAccessories();
+    const allAccessoriesId = allAccessories.map(x => x._id.toString());
+    const cubeAccessoriesId = cube.accessories.map(x => x._id.toString());
+    const hasAll = allAccessoriesId.length === cubeAccessoriesId.length;
+    const available = allAccessories.filter(x => !cubeAccessoriesId.includes(x._id.toString()));
     res.render('attachAccessory', {
         _id: cube._id,
         name: cube.name,
         imageUrl: cube.imageUrl,
-        accessories: allAccessories
+        accessories: available,
+        hasAll
     });
 });
 
