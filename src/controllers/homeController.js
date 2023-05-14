@@ -8,22 +8,16 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { search, fromInput, toInput } = req.body;
-    const difficultyFrom = Number(fromInput);
-    const difficultyTo = Number(toInput);
+    const { search, from, to } = req.body;
     let cubes = await getAll();
+    console.log(search, from, to);
+
     if (search) {
-        cubes = cubes.filter(cube => cube.name.toLowerCase().includes(search?.toLowerCase()));
+        cubes = cubes.filter(x => x.name.toLowerCase().includes(search?.toLowerCase()));
     }
 
-    if (difficultyFrom) {
-        cubes = cubes.filter(cube => cube.difficultyLevel >= difficultyFrom);
-    }
-
-    if (difficultyTo) {
-        cubes = cubes.filter(cube => cube.difficultyLevel <= difficultyTo);
-    }
-    res.render('home', { cubes, search, difficultyFrom, difficultyTo });
+    
+    res.render('home', { cubes, search });
 });
 
 module.exports = router;
