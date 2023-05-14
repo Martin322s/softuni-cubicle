@@ -1,4 +1,4 @@
-const { createCube, getOne, createAccessory, getAllAccessories } = require('../services/cubeService');
+const { createCube, getOne, createAccessory, getAllAccessories, getOneAccessory, attachAccessory } = require('../services/cubeService');
 
 const router = require('express').Router();
 
@@ -12,19 +12,21 @@ router.get('/create', (req, res) => {
 
 router.post('/create', async (req, res) => {
     const { name, description, imageUrl, difficultyLevel } = req.body;
-    await createCube({ name, description, imageUrl, difficultyLevel });
+    await createCube({ name, description, imageUrl, difficultyLevel, accessories: [] });
     res.redirect('/');
 });
 
 router.get('/details/:cubeId', async (req, res) => {
     const cubeId = req.params.cubeId;
-    const cube = await getOne(cubeId)
+    const cube = await getOne(cubeId);
+    console.log(cube.accessories);
     res.render('details', {
         _id: cube._id,
         name: cube.name,
         imageUrl: cube.imageUrl,
         description: cube.description,
-        difficultyLevel: cube.difficultyLevel
+        difficultyLevel: cube.difficultyLevel,
+        accessories: cube.accessories
     });
 });
 
@@ -49,9 +51,14 @@ router.get('/attach/acessory/:cubeId', async (req, res) => {
     });
 });
 
-router.post('/attach', (req, res) => {
+router.post('/attach/:cubeId', async (req, res) => {
     const { accessoryId } = req.body;
-    console.log(accessoryId);
+    const cubeId = req.params.cubeId;
+    const accessory = await getOneAccessory(accessoryId)
+    const cube = await getOne(cubeId);
+    cube.accessories.push(accessory._id);
+    await attachAccessory(cubeId, cube);
+    res.redirect(`/cube/details/${cubeId}`);
 });
 
 module.exports = router;

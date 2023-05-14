@@ -8,5 +8,15 @@
 </div>
 <h2>Accessories</h2>
 <div class="accessories">
-    <h3 class="italic">This cube has no accessories yet...</h3>
+    {{#if accessories}}
+    {{#each accessories}}
+    <div class="accessory">
+        <img src={{accessory.imageUrl}} alt="stickerName">
+        <h3>{{accessory.name}}</h3>
+        <p>{{accessory.description}}</p>
+    </div>
+    {{/each}}
+    {{else}}
+    <h3 class="italic">This cube has no accessories yet..</h3>
+    {{/if}}
 </div>
