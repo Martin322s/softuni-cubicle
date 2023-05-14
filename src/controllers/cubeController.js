@@ -19,14 +19,8 @@ router.post('/create', async (req, res) => {
 router.get('/details/:cubeId', async (req, res) => {
     const cubeId = req.params.cubeId;
     const cube = await getOne(cubeId);
-    console.log(cube.accessories);
     res.render('details', {
-        _id: cube._id,
-        name: cube.name,
-        imageUrl: cube.imageUrl,
-        description: cube.description,
-        difficultyLevel: cube.difficultyLevel,
-        accessories: cube.accessories
+        cube: cube
     });
 });
 
